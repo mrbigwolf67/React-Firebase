@@ -81,8 +81,9 @@ class EventForm extends Component {
                             value={hostedBy}
                             placeholder="Enter the name of person hosting" />
                     </Form.Field>
-                    <Button positive type="submit">
-                        {selectedEvent && 'Uppdatera' || 'Skicka'}
+                    <Button positive type="submit">                        
+                        {selectedEvent && 'Uppdatera'}
+                        {!selectedEvent && 'Skicka'} 
                     </Button>
                     <Button onClick={cancelFormOpen} type="button">Cancel</Button>                   
                     {selectedEvent &&  <Button onClick={ () =>  deleteEvent(selectedEvent.id)} negative type="button">Ta bort </Button> }
