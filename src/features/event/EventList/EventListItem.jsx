@@ -4,7 +4,7 @@ import EventListAttendee from './EventListAttendee'
 
 class EventListItem extends Component {
     render() {
-        const event = this.props.event;
+        const { event, selectEvent, deleteEvent } = this.props;
         return (
             <Segment.Group>
                 <Segment>
@@ -12,7 +12,7 @@ class EventListItem extends Component {
                         <Item>
                             <Item.Image size="tiny" circular src={event.hostPhotoURL} />
                             <Item.Content>
-                                <Item.Header >Event Title</Item.Header>
+                                <Item.Header >{event.title}</Item.Header>
                                 <Item.Description>
                                     Hosted by {event.hostedBy}
                                 </Item.Description>
@@ -36,8 +36,9 @@ class EventListItem extends Component {
                     </List>
                 </Segment>
                 <Segment clearing>
-                <span>{event.description}</span>
-                    <Button as="a" color="teal" floated="right" content="View" />
+                <span>{event.description}</span>                   
+                    <Button negative onClick={ () => deleteEvent(event.id) } as="a" color="red" floated="right" content="Ta bort" />
+                    <Button onClick={ () => selectEvent(event) } as="a" color="teal" floated="right" content="Titta" />
                 </Segment>
             </Segment.Group>
         )

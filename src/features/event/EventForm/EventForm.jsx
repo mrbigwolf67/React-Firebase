@@ -9,19 +9,34 @@ class EventForm extends Component {
         venue: '',
         hostedBy: ''
     }
-    handleFormSubmit = (event) => {
-        event.preventDefault();
-       this.props.createEvent(this.state);
+
+    // lifecyclemethods  
+    componentDidMount() {
+        if (this.props.selectedEvent !== null) {
+            this.setState({
+                ...this.props.selectedEvent
+            })
+        }
     }
 
-    handleInputChange = ({ target: {name, value }}) => {
+
+    handleFormSubmit = (event) => {
+        event.preventDefault();
+        if (this.props.selectedEvent) {
+            this.props.updateEvent(this.state);
+        } else {
+            this.props.createEvent(this.state);
+        }
+    }
+
+    handleInputChange = ({ target: { name, value } }) => {
         this.setState({
             [name]: value
         })
     }
 
     render() {
-        const { cancelFormOpen } = this.props;
+        const { cancelFormOpen, selectedEvent, deleteEvent } = this.props;
         const { title, date, city, venue, hostedBy } = this.state;
         return (
             <Segment>
@@ -67,9 +82,10 @@ class EventForm extends Component {
                             placeholder="Enter the name of person hosting" />
                     </Form.Field>
                     <Button positive type="submit">
-                        Submit
-                </Button>
-                    <Button onClick={cancelFormOpen} type="button">Cancel</Button>
+                        {selectedEvent && 'Uppdatera' || 'Skicka'}
+                    </Button>
+                    <Button onClick={cancelFormOpen} type="button">Cancel</Button>                   
+                    {selectedEvent &&  <Button onClick={ () =>  deleteEvent(selectedEvent.id)} negative type="button">Ta bort </Button> }
                 </Form>
             </Segment>
         )
